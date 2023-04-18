@@ -208,14 +208,14 @@
         scene.add(ceilingPlane);
 
         // orbit controls
-        const orbit = new OrbitControls(camera, renderer.domElement);
+        // const orbit = new OrbitControls(camera, renderer.domElement);
 
-        function animate() {
-            requestAnimationFrame(animate);
-            renderer.render(scene, camera);
-            orbit.update(); // update the state of OrbitControls
-        }
-        animate();
+        // function animate() {
+        //     requestAnimationFrame(animate);
+        //     renderer.render(scene, camera);
+        //     orbit.update(); // update the state of OrbitControls
+        // }
+        // animate();
 
         // Create a Box3 object for the camera's bounding box
         const cameraBox = new THREE.Box3().setFromObject(camera);
