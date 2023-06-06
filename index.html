@@ -206,6 +206,7 @@
         ceilingPlane.position.y = 22;
 
         scene.add(ceilingPlane);
+        
 
         // orbit controls
         //const orbit = new OrbitControls(camera, renderer.domElement);
@@ -271,9 +272,9 @@
                 if (intersects.length > 0.99999999999) {
                     const intersectedObject = intersects[0].object;
                     if (intersectedObject === portal1) {
-                        window.location.href = "balls.html";
-                    } else if (intersectedObject === portal2) {
                         window.location.href = "shooting.html";
+                    } else if (intersectedObject === portal2) {
+                        window.location.href = "https://github.com/BennyMarcal/BennyMarcal.github.io";
                     } else if (intersectedObject === portal3) {
                         window.location.href = "stack.html";
                     }

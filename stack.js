@@ -17,9 +17,9 @@ const resultsElement = document.getElementById("results");
 
 init();
 
-// Determines how precise the game is on autopilot
+
 function setRobotPrecision() {
-  robotPrecision = Math.random() * 1 - 0.5;
+  robotPrecision = Math.random() * 1 - 0.5; //Simulação da precisao do robo
 }
 
 function init() {
@@ -192,6 +192,7 @@ function cutBox(topLayer, overlap, size, delta) {
 
 window.addEventListener("mousedown", eventHandler);
 window.addEventListener("touchstart", eventHandler);
+
 window.addEventListener("keydown", function (event) {
   if (event.key == " ") {
     event.preventDefault();
@@ -201,6 +202,12 @@ window.addEventListener("keydown", function (event) {
   if (event.key == "R" || event.key == "r") {
     event.preventDefault();
     startGame();
+    return;
+  }
+
+  if (event.key === "B" || event.key === "b") {
+    event.preventDefault();
+    window.location.href = "index.html";
     return;
   }
 });
