@@ -2,7 +2,7 @@
 <html>
 
 <head>
-	<title>Challenge Yourself</title>
+	<title>Challenge Yourself!</title>
 	<style>
         body {
           margin: 0;
@@ -10,6 +10,9 @@
         }
         canvas {
           display: block;
+        }
+        #instructions {
+            display: none;
         }
       </style>
 </head>
@@ -25,6 +28,8 @@
 
 		import * as THREE from 'three';
         //import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
+
+        // const instructionsElement = document.getElementById("instructions");
 
         const picture1Texture = new THREE.TextureLoader().load('./image/shooting.jpg');
         const picture2Texture = new THREE.TextureLoader().load('./image/discord.png');
@@ -49,16 +54,14 @@
         const mouse = new THREE.Vector2();
 
 
-        //Ambient light is a soft light that lights up all the objects in the scene equally
-        //const ambientLight = new THREE.AmbientLight(0xffffff, 1.0); // color, intensity, distance, decay
-        //ambientLight.position = camera.position; //light follows camera
-        //scene.add(ambientLight);
+        // Ambient light is a soft light that lights up all the objects in the scene equally
+        // const ambientLight = new THREE.AmbientLight(0xffffff, 1.0); // color, intensity, distance, decay
+        // ambientLight.position = camera.position; //light follows camera
+        // scene.add(ambientLight);
 
         // Directional light is a light source that acts like the sun, that illuminates all objects in the scene equally from a specific direction.
         const sunLight = new THREE.DirectionalLight(0xdddddd, 1.0); // color, intensity, distance, decay
-        sunLight.position.y = 30; // Move the sunlight higher
-        sunLight.position.z = -10; // Move the sunlight behind
-        sunLight.position.normalize();
+        sunLight.position.y = 15;
         scene.add(sunLight);
 
         // Controls
