@@ -7,9 +7,9 @@ let stack; // Parts that stay solid on top of each other
 let overhangs; // Overhanging parts that fall down
 const boxHeight = 1; // Height of each layer
 const originalBoxSize = 3; // Original width and height of a box
-let autopilot;
+let robot;
 let gameEnded;
-let robotPrecision; // Determines how precise the game is on autopilot
+let robotPrecision; // Determines how precise the game is on robot
 
 const scoreElement = document.getElementById("score");
 const instructionsElement = document.getElementById("instructions");
@@ -23,7 +23,7 @@ function setRobotPrecision() {
 }
 
 function init() {
-  autopilot = true;
+  robot = true;
   gameEnded = false;
   lastTime = 0;
   stack = [];
@@ -87,7 +87,7 @@ function init() {
 }
 
 function startGame() {
-  autopilot = false;
+  robot = false;
   gameEnded = false;
   lastTime = 0;
   stack = [];
@@ -213,7 +213,7 @@ window.addEventListener("keydown", function (event) {
 });
 
 function eventHandler() {
-  if (autopilot) startGame();
+  if (robot) startGame();
   else splitBlockAndAddNextOneIfOverlaps();
 }
 
@@ -278,7 +278,7 @@ function missedTheSpot() {
   scene.remove(topLayer.threejs);
 
   gameEnded = true;
-  if (resultsElement && !autopilot) resultsElement.style.display = "flex";
+  if (resultsElement && !robot) resultsElement.style.display = "flex";
 }
 
 function animation(time) {
@@ -290,11 +290,11 @@ function animation(time) {
     const previousLayer = stack[stack.length - 2];
 
     // The top level box should move if the game has not ended AND
-    // it's either NOT in autopilot or it is in autopilot and the box did not yet reach the robot position
+    // it's either NOT in robot or it is in robot and the box did not yet reach the robot position
     const boxShouldMove =
       !gameEnded &&
-      (!autopilot ||
-        (autopilot &&
+      (!robot ||
+        (robot &&
           topLayer.threejs.position[topLayer.direction] <
             previousLayer.threejs.position[topLayer.direction] +
               robotPrecision));
@@ -309,9 +309,9 @@ function animation(time) {
         missedTheSpot();
       }
     } else {
-      // If it shouldn't move then is it because the autopilot reached the correct position?
+      // If it shouldn't move then is it because the robot reached the correct position?
       // Because if so then next level is coming
-      if (autopilot) {
+      if (robot) {
         splitBlockAndAddNextOneIfOverlaps();
         setRobotPrecision();
       }

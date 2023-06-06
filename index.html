@@ -2,7 +2,7 @@
 <html>
 
 <head>
-	<title>Controling the camera - Example</title>
+	<title>Challenge Yourself</title>
 	<style>
         body {
           margin: 0;
@@ -26,6 +26,10 @@
 		import * as THREE from 'three';
         //import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 
+        const picture1Texture = new THREE.TextureLoader().load('./image/shooting.jpg');
+        const picture2Texture = new THREE.TextureLoader().load('./image/discord.png');
+        const picture3Texture = new THREE.TextureLoader().load('./image/stack.jpg');
+
 		const scene = new THREE.Scene(); 
         const w = window.innerWidth; 
         const h = window.innerHeight; 
@@ -45,14 +49,16 @@
         const mouse = new THREE.Vector2();
 
 
-        // Ambient light is a soft light that lights up all the objects in the scene equally
-        // const ambientLight = new THREE.AmbientLight(0xffffff, 1.0); // color, intensity, distance, decay
-        // ambientLight.position = camera.position; //light follows camera
-        // scene.add(ambientLight);
+        //Ambient light is a soft light that lights up all the objects in the scene equally
+        const ambientLight = new THREE.AmbientLight(0xffffff, 1.0); // color, intensity, distance, decay
+        ambientLight.position = camera.position; //light follows camera
+        scene.add(ambientLight);
 
         // Directional light is a light source that acts like the sun, that illuminates all objects in the scene equally from a specific direction.
         const sunLight = new THREE.DirectionalLight(0xdddddd, 1.0); // color, intensity, distance, decay
-        sunLight.position.y = 15;
+        sunLight.position.y = 30; // Move the sunlight higher
+        sunLight.position.z = -10; // Move the sunlight behind
+        sunLight.position.normalize();
         scene.add(sunLight);
 
         // Controls
@@ -132,6 +138,12 @@
         // Create a fontLoader
         // const loader = new THREE.FontLoader();
 
+        const pictureGeometry = new THREE.PlaneGeometry(6, 4); // Adjust the width and height as needed
+
+        const picture1Material = new THREE.MeshBasicMaterial({ map: picture1Texture });
+        const picture2Material = new THREE.MeshBasicMaterial({ map: picture2Texture, transparent: true });
+        const picture3Material = new THREE.MeshBasicMaterial({ map: picture3Texture });
+
         // Portal creating 
         const portal1Texture = new THREE.TextureLoader().load('./image/portal1.jpg');
         const portal1Material = new THREE.MeshBasicMaterial({ map: portal1Texture });
@@ -158,6 +170,21 @@
         portal1.position.set(-14, 1, -5);
         portal2.position.set(0, 1, -5); 
         portal3.position.set(14, 1, -5);
+
+        const picture1 = new THREE.Mesh(pictureGeometry, picture1Material);
+        picture1.position.set(portal1.position.x, portal1.position.y + 6, portal1.position.z);
+        picture1.scale.set(0.7, 1.2, 0.5); // Adjust the scale here
+
+        const picture2 = new THREE.Mesh(pictureGeometry, picture2Material);
+        picture2.position.set(portal2.position.x, portal2.position.y + 6, portal2.position.z);
+        picture1.scale.set(0.7, 1.2, 0.5); // Adjust the scale here
+
+        const picture3 = new THREE.Mesh(pictureGeometry, picture3Material);
+        picture3.position.set(portal3.position.x, portal3.position.y + 6, portal3.position.z);
+        picture3.scale.set(0.7, 1.2, 0.5); // Adjust the scale here
+
+        //Add the images to the scene
+        scene.add(picture1, picture2, picture3);
 
         // Add the portals to the scene
         scene.add(portal1, portal2, portal3);
@@ -250,6 +277,19 @@
             break;
         }
         }
+
+        function onWindowResize() {
+        // Update the renderer size
+        renderer.setSize(window.innerWidth, window.innerHeight);
+
+        // Update the camera aspect ratio
+        const aspectRatio = window.innerWidth / window.innerHeight;
+        camera.aspect = aspectRatio;
+        camera.updateProjectionMatrix();
+        }
+
+        // Add event listener for window resize
+        window.addEventListener('resize', onWindowResize);
 
         // Add an event listener to the window to listen for keydown events
         window.addEventListener('keydown', (event) => {
